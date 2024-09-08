@@ -5,12 +5,12 @@ import {
   UnauthorizedException,
 } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { UserModel } from "../models/user.model";
 import { Model } from "mongoose";
 import { LoginDto, SingInDto, updatePassDto, UpdateUserDto } from "./user.dto";
 import { compare, hash } from "bcrypt";
-import { SessionType } from "../types/type";
 import { ConfigService } from "@nestjs/config";
+import { UserModel } from "../../models/user.model";
+import { SessionType } from "../../types/type";
 @Injectable()
 export class UserService {
   constructor(

@@ -7,8 +7,8 @@ import {
   Put,
   Query,
   Session,
+  UseGuards,
 } from "@nestjs/common";
-import { SessionType } from "../types/type";
 import {
   CreateTaskDto,
   FilterListTasksDto,
@@ -17,7 +17,10 @@ import {
 } from "./task.dto";
 import { Types } from "mongoose";
 import { TaskService } from "./task.service";
+import { SessionType } from "../../types/type";
+import { AuthGuard } from "../../gurds/custom.auth.guard";
 
+@UseGuards(AuthGuard)
 @Controller("task")
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
@@ -41,7 +44,7 @@ export class TaskController {
     @Session() session: SessionType,
     @Query() filter: FilterListTasksDto
   ) {
-    return this.taskService.listTasks(filter, session);
+    return this.taskService.listTasks(filter);
   }
   @Get("/createds")
   async listCreatedTasks(@Session() session: SessionType) {

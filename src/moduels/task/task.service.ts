@@ -1,9 +1,9 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { TaskModel } from "../models/task.model";
 import { Model } from "mongoose";
 import { CreateTaskDto, FilterListTasksDto, UpdateTaskDto } from "./task.dto";
-import { SessionType } from "../types/type";
+import { TaskModel } from "../../models/task.model";
+import { SessionType } from "../../types/type";
 
 @Injectable()
 export class TaskService {

@@ -1,8 +1,10 @@
 import { Module } from "@nestjs/common";
-import { MongooseModule } from "@nestjs/mongoose";
-import { UserModelDefinition } from "./models/user.model";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-import { UserService } from "./user/user.service";
+import { MongooseModule } from "@nestjs/mongoose";
+import { TaskModule } from "./moduels/task/task.module";
+import { TaskService } from "./moduels/task/task.service";
+import { UserModule } from "./moduels/user/user.module";
+import { UserService } from "./moduels/user/user.service";
 
 @Module({
   imports: [
@@ -20,8 +22,10 @@ import { UserService } from "./user/user.service";
         },
       }),
     }),
+    TaskModule,
+    UserModule,
   ],
   controllers: [],
-  providers: [UserService],
+  providers: [UserService, TaskService],
 })
 export class AppModule {}

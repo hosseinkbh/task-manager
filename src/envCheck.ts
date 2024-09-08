@@ -1,5 +1,5 @@
 import { plainToInstance } from "class-transformer";
-import { IsNotEmpty, IsNumber, validateSync } from "class-validator";
+import { IsNotEmpty, IsNumber, IsString, validateSync } from "class-validator";
 
 export enum NodeEnvironments {
   PRODUCTION = "production",
@@ -12,7 +12,12 @@ export default class EnvironmentVariables {
   @IsNotEmpty()
   @IsNumber()
   PORT!: number;
-
+  @IsNotEmpty()
+  @IsString()
+  MONGODB_URI!: string;
+  @IsNotEmpty()
+  @IsNumber()
+  ENCRYPTION_SALT_ROUND!: number;
   static validate(config: Record<string, unknown>) {
     const validatedConfig = plainToInstance(EnvironmentVariables, config, {
       enableImplicitConversion: true,

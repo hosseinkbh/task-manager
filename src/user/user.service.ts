@@ -64,7 +64,7 @@ export class UserService {
   }
   private encryptPass(pass: string) {
     let encryptedPass;
-    const saltRound = this.configService.get("saltRound");
+    const saltRound = this.configService.get("ENCRYPTION_SALT_ROUND");
     hash(pass, saltRound, function (err, hash) {
       encryptedPass = hash;
       if (err) throw new InternalServerErrorException("SOMETHING_WENT_WRONG");

@@ -46,10 +46,6 @@ export class TaskController {
   ) {
     return this.taskService.listTasks(filter);
   }
-  @Get("/createds")
-  async listCreatedTasks(@Session() session: SessionType) {
-    return this.taskService.listCreatedTasks(session);
-  }
   @Get("/assignes")
   async listAssigneTasks(@Session() session: SessionType) {
     return this.taskService.listAssigneTasks(session);

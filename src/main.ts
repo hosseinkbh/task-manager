@@ -1,13 +1,12 @@
-import { NestFactory } from "@nestjs/core";
-import { AppModule } from "./app.module";
-import helmet from "helmet";
-import { I18nValidationExceptionFilter, I18nValidationPipe } from "nestjs-i18n";
-import morgan from "morgan";
 import { ConfigService } from "@nestjs/config";
+import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
-import EnvironmentVariables from "./envCheck";
 import session from "express-session";
-import { UserDocument } from "./models/user.model";
+import helmet from "helmet";
+import morgan from "morgan";
+import { I18nValidationExceptionFilter, I18nValidationPipe } from "nestjs-i18n";
+import { AppModule } from "./app.module";
+import EnvironmentVariables from "./envCheck";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {});
@@ -31,7 +30,7 @@ async function bootstrap() {
     })
   );
   app.use(
-    morgan(function (tokens, req, res) {
+    morgan((tokens, req, res) => {
       console.log(tokens["response-time"](req, res));
       return [
         tokens.method(req, res),
@@ -53,10 +52,3 @@ async function bootstrap() {
   });
 }
 bootstrap();
-
-declare module "express-session" {
-  interface SessionData {
-    isLoggedIn: boolean;
-    user: UserDocument;
-  }
-}

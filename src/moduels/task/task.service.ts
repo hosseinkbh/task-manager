@@ -31,9 +31,6 @@ export class TaskService {
     queryFilter.title = filter.title && { $regex: `/${filter.title}/` };
     return this.taskModel.find(queryFilter);
   }
-  async listCreatedTasks(session: SessionType) {
-    return this.taskModel.find({ createdBy: session.user._id });
-  }
   async listAssigneTasks(session: SessionType) {
     return this.taskModel.find({ assigne: session.user._id });
   }

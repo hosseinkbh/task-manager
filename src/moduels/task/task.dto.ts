@@ -7,7 +7,7 @@ import {
   MaxLength,
   MinLength,
 } from "class-validator";
-import { PriorityEnum, StatuEnum } from "../models/task.model";
+import { PriorityEnum, StatuEnum } from "../../models/task.model";
 
 export class CreateTaskDto {
   @IsString()

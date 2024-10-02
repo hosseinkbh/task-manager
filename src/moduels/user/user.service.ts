@@ -14,7 +14,8 @@ import { SessionType } from "../../types/type";
 @Injectable()
 export class UserService {
   constructor(
-    @InjectModel(UserModel.name) private readonly userModel: Model<UserModel>,
+    @InjectModel(UserModel.name)
+    private readonly userModel: Model<UserModel>,
     private readonly configService: ConfigService
   ) {}
   async signIn(body: SingInDto, session: SessionType) {

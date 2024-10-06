@@ -30,6 +30,7 @@
     "@types/mongoose-aggregate-paginate-v2": "^1.0.12",
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.7.4",
+    "@types/pug": "^2.0.10",
     "bcrypt": "^5.1.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
@@ -43,6 +44,7 @@
     "morgan": "^1.10.0",
     "nestjs-i18n": "^10.4.9",
     "nestjs-throttler-storage-redis": "^0.5.1",
+    "pug": "^3.0.3",
     "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {

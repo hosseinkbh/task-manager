@@ -26,7 +26,7 @@ export class SingInDto {
   email!: string;
   @IsString()
   @MinLength(8)
-  pass!: string;
+  password!: string;
   @IsString()
   @MinLength(2)
   @MaxLength(20)

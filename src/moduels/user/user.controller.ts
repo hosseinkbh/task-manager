@@ -4,23 +4,37 @@ import {
   Get,
   Post,
   Put,
+  Render,
   Session,
   UseGuards,
 } from "@nestjs/common";
-import { LoginDto, SingInDto, updatePassDto, UpdateUserDto } from "./user.dto";
-import { UserService } from "./user.service";
 import { AuthGuard } from "../../gurds/custom.auth.guard";
 import { SessionType } from "../../types/type";
-
-@UseGuards(AuthGuard)
+import { LoginDto, SingInDto, updatePassDto, UpdateUserDto } from "./user.dto";
+import { UserService } from "./user.service";
+import { CustomThrottlerGuard } from "../../utils/custom-throttler-guard";
 @Controller("/user")
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post("/signIn")
+  @Get("/index")
+  @Render("index")
+  indexView() {}
+
+  @Get("/view/sign-in")
+  @Render("sign-in")
+  signInView() {}
+
+  @Get("/view/log-in")
+  @Render("log-in")
+  logInView() {}
+
+  @UseGuards(AuthGuard, CustomThrottlerGuard)
+  @Post("/sign-in")
   async signIn(@Session() session: SessionType, @Body() body: SingInDto) {
     return this.userService.signIn(body, session);
   }
+
   @Post("/logIn")
   async login(@Session() session: SessionType, @Body() body: LoginDto) {
     return this.userService.login(body, session);

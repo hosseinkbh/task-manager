@@ -19,7 +19,7 @@ export class UserService {
     private readonly configService: ConfigService
   ) {}
   async signIn(body: SingInDto, session: SessionType) {
-    const encryptedPass = this.encryptPass(body.pass);
+    const encryptedPass = this.encryptPass(body.password);
     const user = await this.userModel.create({
       password: encryptedPass,
       email: body.email,

@@ -12,8 +12,23 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {});
   const configService = app.get(ConfigService<EnvironmentVariables, true>);
   app.useBodyParser("raw");
-  app.use(helmet({ xPoweredBy: false }));
   app.enableCors({ origin: "*" });
+  app.setViewEngine("pug");
+  app.use(
+    helmet({
+      xPoweredBy: false,
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          "default-src": ["'self'"],
+          "script-src-attr": ["'unsafe-inline'"],
+          "script-src": ["'self'", "'unsafe-inline'"],
+          "img-src": ["'self'", "https://*.openstreetmap.org"],
+        },
+      },
+    })
+  );
+
   app.use(
     session({
       secret: "my-secret",

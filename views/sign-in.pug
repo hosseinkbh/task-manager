@@ -25,36 +25,36 @@ html
     .top-left-text Task Manager
     .container.mt-4
       h2.text-center.mb-4 Sign In
-      form#signInForm(action="/sign-in" method="POST" class="w-50 mx-auto")
+      form#signInForm(action="/user/sign-in" method="POST" class="w-50 mx-auto")
         .row.g-2
           .col-md-6
-            label(for="firstName" class="form-label mb-1") First Name:
-            input.form-control(type="text" id="firstName" name="firstName" required)
+            label(for="first_name" class="form-label mb-1") First Name:
+            input.form-control(type="text" id="first_name" name="first_name" minlength="2" maxlength="20" required)
           .col-md-6
-            label(for="lastName" class="form-label mb-1") Last Name:
-            input.form-control(type="text" id="lastName" name="lastName" required)
+            label(for="last_name" class="form-label mb-1") Last Name:
+            input.form-control(type="text" id="last_name" name="last_name" minlength="2" maxlength="20" required)
         .row.g-2.mt-2
           .col-md-12
             label(for="email" class="form-label mb-1") Email:
-            input.form-control(type="email" id="email" name="email" required)
+            input.form-control(type="string" id="email" name="email" minlength="10" maxlength="70" required)
         .row.g-2.mt-2
           .col-md-12
             label(for="password" class="form-label mb-1") Password:
-            input.form-control(type="password" id="password" name="password" required)
+            input.form-control(type="password" id="password" name="password" minlength="8" maxlength="30" required)
         .row.g-2.mt-2
           .col-md-12
             label(for="confirmPassword" class="form-label mb-1") Confirm Password:
-            input.form-control(type="password" id="confirmPassword" name="confirmPassword" required)
+            input.form-control(type="password" id="confirmPassword" name="confirmPassword" minlength="8" maxlength="30" required)
             span.error-message#passwordError Passwords do not match.
         .row.g-2.mt-2
-          .col-md-12
+          .col-md-12  
             label(for="phoneNumber" class="form-label mb-1") Phone Number:
-            input.form-control(type="tel" id="phoneNumber" name="phoneNumber" required)
+            input.form-control(type="tel" id="phoneNumber" name="phoneNumber" minlength="11" maxlength="11" required)
         .row.mt-3.justify-content-center
           .col-auto
             button.btn.btn-primary(type="submit") Sign In
           .col-auto
-            button.btn.btn-danger(type="button" onclick="window.location='/user/index'") Back
+            button.btn.btn-danger(type="button" onclick="window.location='/'") Back
 
 script.
   form.addEventListener('submit', function (e) {
@@ -66,6 +66,8 @@ script.
       e.preventDefault(); // Prevent form submission
       passwordError.style.display = 'block'; // Show error message
     } else {
-      passwordError.style.display = 'none'; // Hide error message if valid
+      passwordError.style.display = 'none';
+      delete confirmPassword
+       // Hide error message if valid
     }
   });

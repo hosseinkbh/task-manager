@@ -5,6 +5,9 @@ import { TaskModule } from "./moduels/task/task.module";
 import { UserModule } from "./moduels/user/user.module";
 import { ThrottlerModule } from "@nestjs/throttler";
 import { ThrottlerStorageRedisService } from "nestjs-throttler-storage-redis";
+import { AcceptLanguageResolver, I18nModule, QueryResolver } from "nestjs-i18n";
+import { join } from "path";
+import { AppController } from "./app.controller";
 
 @Module({
   imports: [
@@ -24,6 +27,18 @@ import { ThrottlerStorageRedisService } from "nestjs-throttler-storage-redis";
     }),
     TaskModule,
     UserModule,
+    I18nModule.forRoot({
+      fallbackLanguage: "fa",
+      loaderOptions: {
+        path: join(process.cwd(), "locales"),
+        watch: true,
+      },
+      resolvers: [
+        { use: QueryResolver, options: ["lang"] },
+        AcceptLanguageResolver,
+      ],
+    }),
+
     ThrottlerModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -41,7 +56,7 @@ import { ThrottlerStorageRedisService } from "nestjs-throttler-storage-redis";
       },
     }),
   ],
-  controllers: [],
-  providers: [{ provide: APP_GUARD, useClass: CustomThrottlerGuard }],
+  controllers: [AppController],
+  // providers: [{ provide: APP_GUARD, useClass: CustomThrottlerGuard }],
 })
 export class AppModule {}

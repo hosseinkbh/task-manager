@@ -38,6 +38,7 @@
     "express-useragent": "^1.0.15",
     "helmet": "^8.0.0",
     "ioredis": "^5.4.1",
+    "jquery": "^3.7.1",
     "mongoose": "^8.7.0",
     "mongoose-aggregate-paginate-v2": "^1.1.2",
     "mongoose-paginate-v2": "^1.8.5",

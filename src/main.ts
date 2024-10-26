@@ -7,13 +7,13 @@ import morgan from "morgan";
 import { I18nValidationExceptionFilter, I18nValidationPipe } from "nestjs-i18n";
 import { AppModule } from "./app.module";
 import EnvironmentVariables from "./envCheck";
+import { join } from "path";
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, {});
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const configService = app.get(ConfigService<EnvironmentVariables, true>);
   app.useBodyParser("raw");
   app.enableCors({ origin: "*" });
-  app.setViewEngine("pug");
   app.use(
     helmet({
       xPoweredBy: false,
@@ -44,6 +44,10 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     })
   );
+  app.useStaticAssets(join(process.cwd(), "public"));
+  app.setBaseViewsDir(join(process.cwd(), "views"));
+  app.setViewEngine("pug");
+
   app.use(
     morgan((tokens, req, res) => {
       console.log(tokens["response-time"](req, res));

@@ -1,0 +1,228 @@
+doctype html
+html
+  head
+    title Board
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css")
+    style.
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        transition:  300ms margin-left ease;
+        //- margin-left: 0;
+      }
+      .container.shrink {
+        margin-right: 250px;
+      }
+      .shrink {
+        transition: right 300ms ease; /* Smooth transition */
+        margin-right: 250px;
+      }
+      .task-board {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        padding: 20px;
+      }
+      .column {
+        background-color: #f0f0f0;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .column h2 {
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      .task {
+        background-color: #fff;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        cursor: grab;      
+      }
+      .task-title {
+        font-weight: bold;
+      }
+      .task-estimate {
+        color: #666;
+      }  
+      .task-id {
+        display: none;
+      }
+      .dragging {
+        opacity: 0.5;
+      }
+      .top-left-text {
+        position: absolute;
+        top: 25px;
+        left: 30px;
+        font-size: 1.25rem;
+        font-weight: bold;
+      }
+      .create-button {
+        position: absolute;
+        color:white; 
+        top: 20px; 
+        right: 20px; 
+        padding: 10px 20px;
+      }
+      .sidebar {
+        width: 250px; /* Width of the sidebar */
+        position: fixed;
+        right: -250px; /* Initially hidden off-screen */
+        top: 0;
+        height: 100%;
+        background-color: #f4f4f4;
+        transition: right 0.3s ease; /* Smooth transition */
+        z-index: 1000; /* Ensure it stays above other content */
+       }
+      .sidebar.open {
+        right: 0;
+      }
+      .hidden {
+        display: none;
+      }
+      .close-button {
+        position: absolute;
+        color:white; 
+        top: 15px; 
+        right: 15px; 
+        padding: 10px 20px;
+      }
+      .edit-button {
+        position: absolute;
+        color:white; 
+        top: 15px; 
+        left: 15px; 
+        padding: 10px 20px;
+      }
+
+  body
+    .top-left-text Task Manager
+    button.btn.btn-primary.create-button(type="button" style="" onclick="window.location='/task/view/create'") Create Task
+    .container.mt-5
+      .task-board
+        .column(data-status=StatuEnum.TODO)
+          h2 To Do
+          if (tasks)
+            each task, index in tasks
+              if (task.status === StatuEnum.TODO)
+                .task(draggable="true" data-id=task._id)
+                  .task-id #{task._id}
+                  .task-title #{task.title}
+                  .task-desc #{task.description}
+                  .task-estimate Estimate: 3 hours
+        .column(data-status=StatuEnum.IN_PROGRESS)
+          h2 In Progress
+          if (tasks)
+            each task, index  in tasks
+              if (task.status === StatuEnum.IN_PROGRESS)
+                .task(draggable="true" data-id=task._id)
+                  .task-id #{task._id}
+                  .task-title #{task.title}
+                  .task-desc #{task.description}
+                  .task-estimate Estimate: 3 hours
+        .column(data-status=StatuEnum.DONE)
+          h2 Done
+          if (tasks)
+            each task, index  in tasks
+              if (task.status === StatuEnum.DONE)
+                .task(draggable="true" data-id=task._id)
+                  .task-id #{task._id}
+                  .task-title #{task.title}
+                  .task-desc #{task.description}
+                  .task-estimate Estimate: 3 hours
+  .sidebar.hidden
+    button.btn.btn-primary.close-button(onClick="closeTaskDetails()") Close
+    button.btn.btn-primary.edit-button(onclick="window.location='/task/view/edit'") Edit
+    .container.mt-5
+      .task-details
+        h2 Task Details
+        p#task-detail-id Task ID: 
+        p#task-detail-title Task Title: 
+        p#task-detail-description Task Description: 
+        p#task-detail-estimate Task Estimate: 
+
+script(src="/js/jquery-3.7.1.min.js")
+script.
+  document.addEventListener('DOMContentLoaded', () => {
+    const tasks = document.querySelectorAll('.task');
+    const columns = document.querySelectorAll('.column');
+    const sidebar = document.querySelector('.sidebar');
+    const container = document.querySelector('.container'); // or body  
+    const create_button = document.querySelector('.create-button'); // or body  
+    
+    let draggedTask = null;
+
+    tasks.forEach(task => {
+      task.addEventListener('dragstart', (e) => {
+        draggedTask = task;
+        task.classList.add('dragging');
+        setTimeout(() => task.classList.add('hidden'), 0);
+      });
+
+      task.addEventListener('dragend', () => {
+        task.classList.remove('dragging', 'hidden');
+        draggedTask = null;
+      });
+      task.addEventListener('click', () => {
+        const taskId = task.querySelector('.task-id').textContent;
+        const taskTitle = task.querySelector('.task-title').textContent;
+        const taskDescription = task.querySelector('.task-desc').textContent;
+        const taskEstimate = task.querySelector('.task-estimate').textContent;
+      
+        document.getElementById('task-detail-id').textContent = `Task ID: ${taskId}`;
+        document.getElementById('task-detail-title').textContent = `Task Title: ${taskTitle}`;
+        document.getElementById('task-detail-description').textContent = `Task Description: ${taskDescription}`;
+        document.getElementById('task-detail-estimate').textContent = `Task Estimate: ${taskEstimate}`;
+
+        sidebar.classList.remove('hidden'); // Remove the 'hidden' class
+        sidebar.classList.add('open');
+        container.classList.add('shrink'); // Shrinks the page
+        create_button.classList.add('shrink');
+
+       });
+      });
+
+    columns.forEach(column => {
+      column.addEventListener('dragover', (e) => {
+        e.preventDefault();
+      });
+
+      column.addEventListener('drop', (e) => {
+        if (draggedTask) {
+          column.appendChild(draggedTask);
+          const status = column.getAttribute('data-status');
+          $.ajax({
+              url: `/task/update/${draggedTask.dataset.id}`,
+              method: 'PUT',
+              data: { status:status },
+          });
+        }
+      });
+    });
+    // Close sidebar when clicking outside
+    document.addEventListener('click', (e) => {
+      const isClickInsideSidebar = sidebar.contains(e.target);
+      const isClickOnTask = Array.from(tasks).some(task => task.contains(e.target));
+
+      if (!isClickInsideSidebar && !isClickOnTask) {
+        sidebar.classList.remove('open');
+        container.classList.remove('shrink'); // Reverts the page size
+        create_button.classList.remove('shrink');
+      
+      }
+    });
+
+    // Close sidebar when clicking the "Close" button
+    document.querySelector('.close-button').addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      container.classList.remove('shrink');
+      create_button.classList.remove('shrink');
+
+    });
+  });

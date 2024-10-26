@@ -19,19 +19,32 @@ import { Types } from "mongoose";
 import { TaskService } from "./task.service";
 import { SessionType } from "../../types/type";
 import { AuthGuard } from "../../gurds/custom.auth.guard";
+import { I18nService } from "nestjs-i18n";
+import { PriorityEnum, StatuEnum } from "../../models/task.model";
 
-@UseGuards(AuthGuard)
+// @UseGuards(AuthGuard)
 @Controller("task")
 export class TaskController {
-  constructor(private readonly taskService: TaskService) {}
-  @Post("/create")
+  constructor(
+    private readonly taskService: TaskService,
+    private readonly i18nService: I18nService
+  ) {}
+  @Render("create")
+  @Get("view/create")
+  async createTaskView() {
+    const users = await this.taskService.CreateTaskUsers();
+    return { PriorityEnum: PriorityEnum, users: users };
+  }
+
+  @Redirect("/task/board")
+  @Post("create")
   async createTask(
     @Session() session: SessionType,
     @Body() body: CreateTaskDto
   ) {
-    return this.taskService.createTask(body, session);
+    await this.taskService.createTask(body, session);
   }
-  @Put("/update")
+  @Put("/update/:id")
   async updateTask(
     @Session() session: SessionType,
     @Param() { id }: MongoIdDto,
@@ -39,12 +52,11 @@ export class TaskController {
   ) {
     return this.taskService.updateTask(id, body, session);
   }
-  @Get("/list")
-  async listTasks(
-    @Session() session: SessionType,
-    @Query() filter: FilterListTasksDto
-  ) {
-    return this.taskService.listTasks(filter);
+  @Render("board")
+  @Get("/board")
+  async listTasks(@Query() filter: FilterListTasksDto) {
+    const tasks = await this.taskService.listTasks(filter);
+    return { tasks, StatuEnum };
   }
   @Get("/assignes")
   async listAssigneTasks(@Session() session: SessionType) {

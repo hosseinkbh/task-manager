@@ -1,4 +1,5 @@
 import {
+  ConflictException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -7,19 +8,28 @@ import {
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { LoginDto, SingInDto, updatePassDto, UpdateUserDto } from "./user.dto";
-import { compare, hash } from "bcrypt";
+import bcrypt, { compare } from "bcrypt";
 import { ConfigService } from "@nestjs/config";
 import { UserModel } from "../../models/user.model";
 import { SessionType } from "../../types/type";
+import { I18nService } from "nestjs-i18n";
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(UserModel.name)
     private readonly userModel: Model<UserModel>,
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
+    private readonly i18nService: I18nService
   ) {}
   async signIn(body: SingInDto, session: SessionType) {
-    const encryptedPass = this.encryptPass(body.password);
+    const alreadyRegistered = await this.userModel.findOne({
+      $or: [{ email: body.email }, { phoneNumber: body.phoneNumber }],
+    });
+    if (alreadyRegistered)
+      throw new ConflictException(
+        "a user with this email or phoneNumber already registerd !!!"
+      );
+    const encryptedPass = await this.encryptPass(body.password);
     const user = await this.userModel.create({
       password: encryptedPass,
       email: body.email,
@@ -63,13 +73,9 @@ export class UserService {
       { password: encryptedPass }
     );
   }
-  private encryptPass(pass: string) {
-    let encryptedPass;
-    const saltRound = this.configService.get("ENCRYPTION_SALT_ROUND");
-    hash(pass, saltRound, function (err, hash) {
-      encryptedPass = hash;
-      if (err) throw new InternalServerErrorException("SOMETHING_WENT_WRONG");
-    });
-    return encryptedPass;
+  private async encryptPass(pass: string) {
+    const saltRound = this.configService.getOrThrow("ENCRYPTION_SALT_ROUND");
+    const salt = bcrypt.genSaltSync(+saltRound);
+    return bcrypt.hashSync(pass, salt);
   }
 }

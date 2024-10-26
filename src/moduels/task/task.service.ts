@@ -2,37 +2,50 @@ import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { CreateTaskDto, FilterListTasksDto, UpdateTaskDto } from "./task.dto";
-import { TaskModel } from "../../models/task.model";
+import { StatuEnum, TaskModel } from "../../models/task.model";
 import { SessionType } from "../../types/type";
+import { I18nService } from "nestjs-i18n";
+import { UserModel } from "../../models/user.model";
 
 @Injectable()
 export class TaskService {
   constructor(
-    @InjectModel(TaskModel.name) private readonly taskModel: Model<TaskModel>
+    @InjectModel(TaskModel.name) private readonly taskModel: Model<TaskModel>,
+    @InjectModel(UserModel.name) private readonly userModel: Model<UserModel>,
+
+    private readonly i18nService: I18nService
   ) {}
   async createTask(body: CreateTaskDto, session: SessionType) {
     let validatedBody: any = {};
     validatedBody = this.removeNulls(body);
     validatedBody.createdBy = session.user._id;
-    await this.taskModel.create(validatedBody);
+    await this.taskModel.create({ ...validatedBody, status: StatuEnum.TODO });
   }
   async updateTask(id: string, body: UpdateTaskDto, session: SessionType) {
-    const task = await this.taskModel.findById(id);
-    if (task?.createdBy !== session.user._id)
-      throw new UnauthorizedException(
-        "YOU_ARE_NOT_AUTHORIZE_TO_DO_THIS_ACTION"
-      );
+    // const task = await this.taskModel.findById(id);
+    // if (task?.createdBy !== session.user._id)
+    //   throw new UnauthorizedException(
+    //     "YOU_ARE_NOT_AUTHORIZE_TO_DO_THIS_ACTION"
+    //   );
     const validatedBody = this.removeNulls(body);
     await this.taskModel.findByIdAndUpdate(id, validatedBody);
   }
   async listTasks(filter: FilterListTasksDto) {
     let queryFilter: any = {};
     queryFilter = this.removeNulls(filter);
-    queryFilter.title = filter.title && { $regex: `/${filter.title}/` };
+    if (filter.title) queryFilter.title = { $regex: `/${filter.title}/` };
     return this.taskModel.find(queryFilter);
   }
   async listAssigneTasks(session: SessionType) {
     return this.taskModel.find({ assigne: session.user._id });
+  }
+  async CreateTaskUsers() {
+    const users = await this.userModel.find(
+      {},
+      { first_name: 1, last_name: 1, _id: 1 }
+    );
+    console.log(users);
+    return users;
   }
   private removeNulls(payload: any) {
     let result: any = {};

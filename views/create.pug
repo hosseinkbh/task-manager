@@ -33,7 +33,7 @@ html
     .top-left-text Task Manager
     .container.mt-4
       h2.text-center.mb-4 Create Task
-      form#signInForm(action="/task/create" method="POST" class="w-50 mx-auto")
+      form#createTaskForm(action="/task/create" method="POST" class="w-50 mx-auto")
         .row.g-2.mt-2
           .col-md-12
             label(for="title" class="form-label mb-1") Title:
@@ -53,25 +53,9 @@ html
         .row.g-2.mt-2
           .col-md-12
             label(for="description" class="form-label mb-1") Description:
-            textarea.description.form-control(type="text" id="description" minlength="0" maxlength="5000" name="description" row="10" cols="40" required)
+            textarea.description.form-control(id="description" minlength="0" maxlength="5000" name="description" rows="10" cols="40")
         .row.mt-3.justify-content-center
           .col-auto
             button.btn.btn-primary(type="submit") Create
           .col-auto
             button.btn.btn-danger(type="button" onclick="window.location='/task/board'") Back
-
-script.
-  form.addEventListener('submit', function (e) {
-    const form = document.getElementById('signInForm');
-    const password = document.getElementById('password');
-    let confirmPassword = document.getElementById('confirmPassword');
-    const passwordError = document.getElementById('passwordError');
-    if (password.value !== confirmPassword.value) {
-      e.preventDefault(); // Prevent form submission
-      passwordError.style.display = 'block'; // Show error message
-    } else {
-      passwordError.style.display = 'none';
-      confirmPassword = null
-       // Hide error message if valid
-    }
-  });

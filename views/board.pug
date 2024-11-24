@@ -5,136 +5,17 @@ html
         meta(charset="UTF-8")
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
         link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css")
-        style.
-            body {
-                font-family: Arial, sans-serif;
-            }
-
-            .container {
-                transition: margin-right 1s ease;
-                margin-right: 220px;
-            }
-
-            .container.shrink {
-                margin-right: 400px;
-            }
-
-            .create-button.button_shrink {
-                margin-right: 406px;
-            }
-
-            .task-board {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 20px;
-                padding: 20px;
-            }
-
-            .column {
-                background-color: #f0f0f0;
-                padding: 10px;
-                border-radius: 5px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            }
-
-            .column h2 {
-                text-align: center;
-                margin-bottom: 10px;
-            }
-
-            .task {
-                background-color: #fff;
-                margin-bottom: 10px;
-                padding: 10px;
-                border-radius: 5px;
-                box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-                cursor: grab;
-            }
-
-            .task-id {
-                display: none;
-            }
-
-            .dragging {
-                opacity: 0.5;
-            }
-
-            .top-left-text {
-                position: absolute;
-                top: 25px;
-                left: 30px;
-                font-size: 1.25rem;
-                font-weight: bold;
-            }
-
-            .create-button {
-                transition: margin-right 1s ease;
-                margin-right: 20px;
-                position: absolute;
-                color: white;
-                top: 20px;
-                right: 20px;
-                padding: 10px 20px;
-            }
-
-            .sidebar {
-                width: 400px; /* Width of the sidebar */
-                position: fixed;
-                right: -400px; /* Initially hidden off-screen */
-                top: 0;
-                height: 100%;
-                background-color: #f4f4f4;
-                transition: right 1s ease; /* Smooth transition */
-                z-index: 1000; /* Ensure it stays above other content */
-            }
-
-            .sidebar.open {
-                right: 0;
-            }
-
-            .hidden {
-                display: none;
-            }
-
-            .close-button {
-                position: absolute;
-                color: white;
-                top: 15px;
-                right: 15px;
-                padding: 10px 20px;
-            }
-
-            .edit-button {
-                position: absolute;
-                color: white;
-                top: 15px;
-                left: 15px;
-                padding: 10px 20px;
-            }
-
-            .task-details {
-                margin-top: 80px;
-                margin-left: 15px;
-                margin-right: 15px;
-            }
-
-            .task-priority {
-                position: relative;
-                left: 85%;
-                font-weight: bolder;
-            }
-
-            .detail_id {
-                display: none;
-            }
-
+        link(rel="stylesheet", href="/board.css")
+        link(rel="stylesheet", href="/footer.css")
+        script(src="/jquery-3.7.1.min.js")
+        script(type='text/javascript', src='/board.js')
 body
-    .top-left-text Task Manager
+    a(href=`/` style=`color:inherit;text-decoration:inherit;`).top-left-text Task Manager
     button.btn.btn-primary.create-button(type="button" style="" onclick="window.location='/task/view/create'") Create Task
     .container.mt-5
         .task-board
             .column(data-status=StatuEnum.TODO)
-                h2 To Do
+                h2(style="font-weight: bold;") To Do
                 if (tasks)
                     each task, index in tasks
                         if (task.status === StatuEnum.TODO)
@@ -144,7 +25,7 @@ body
                                 .task-desc  #{task.description}
                                 .task-priority #{task.priority}
             .column(data-status=StatuEnum.IN_PROGRESS)
-                h2 In Progress
+                h2(style="font-weight: bold;") In Progress
                 if (tasks)
                     each task, index  in tasks
                         if (task.status === StatuEnum.IN_PROGRESS)
@@ -154,7 +35,7 @@ body
                                 .task-desc #{task.description}
                                 .task-priority #{task.priority}
             .column(data-status=StatuEnum.DONE)
-                h2 Done
+                h2(style="font-weight: bold;") Done
                 if (tasks)
                     each task, index  in tasks
                         if (task.status === StatuEnum.DONE)
@@ -186,82 +67,7 @@ body
                     label(for="task-detail-description" class="form-label mb-1") Description:
                     textarea#task-detail-description.description.form-control(rows="10" cols="40" readonly=true)
                 .col-md-12
-                    input#task-detail_id.detail_id.form-control(readonly=true)
-
-script(src="/js/jquery-3.7.1.min.js")
-script.
-    document.addEventListener('DOMContentLoaded', () => {
-        const tasks = document.querySelectorAll('.task');
-        const columns = document.querySelectorAll('.column');
-        const sidebar = document.querySelector('.sidebar');
-        const container = document.querySelector('.container');
-        const create_button = document.querySelector('.create-button');
-
-        const task_priority = $('.task-priority')
-        tasks.forEach(task => {
-            task.addEventListener('dragstart', (e) => {
-                draggedTask = task;
-                task.classList.add('dragging');
-                setTimeout(() => task.classList.add('hidden'), 0);
-            });
-            task.addEventListener('dragend', () => {
-                task.classList.remove('dragging', 'hidden');
-                draggedTask = null;
-            });
-            task.addEventListener('click', () => {
-                $.ajax({
-                    url: `/task/get/${task.dataset.id}`,
-                    method: 'GET',
-                    data: {},
-                    success: (response) => {
-                        const assigne = response.assigne;
-                        let assigne_text = "NOT ASSIGNED"
-                        if (assigne && assigne.first_name && assigne.last_name) {
-                            assigne_text = assigne.first_name + " " + assigne.last_name
-                        }
-                        document.getElementById('task-detail-taskId').value = response.task_id;
-                        document.getElementById('task-detail_id').value = response._id;
-                        document.getElementById('task-detail-title').value = response.title;
-                        document.getElementById('task-detail-assigne').value = assigne_text;
-                        document.getElementById('task-detail-priority').value = response.priority ? response.priority : "UNKNOWN";
-                        document.getElementById('task-detail-description').value = response.description
-                        sidebar.classList.remove('hidden');
-                        sidebar.classList.add('open');
-                        container.classList.add('shrink');
-                        create_button.classList.add('button_shrink');
-
-                    }
-                });
-            });
-        });
-        columns.forEach(column => {
-            column.addEventListener('dragover', (e) => {
-                e.preventDefault();
-            });
-
-            column.addEventListener('drop', (e) => {
-                if (draggedTask) {
-                    column.appendChild(draggedTask);
-                    const status = column.getAttribute('data-status');
-                    $.ajax({
-                        url: `/task/update/${draggedTask.dataset.id}`,
-                        method: 'PUT',
-                        data: {status: status},
-                    });
-                }
-            });
-        });
-        document.addEventListener('click', (e) => {
-            const isClickInsideSidebar = sidebar.contains(e.target);
-            const isClickOnTask = Array.from(tasks).some(task => task.contains(e.target));
-        });
-        document.querySelector('.close-button').addEventListener('click', () => {
-            sidebar.classList.remove('open');
-            container.classList.remove('shrink');
-            create_button.classList.remove('button_shrink');
-        });
-        document.querySelector('.edit-button').addEventListener('click', () => {
-            const id = document.getElementById('task-detail_id').value
-            window.location = `/task/view/edit/${id}`
-        });
-    });
+                    input#task-detail_id.detail_id.form-control(readonly=true style="display:none;")
+    footer.footerStyle
+        p.footer-p Made By Hossein Khodabandeh ❤️
+        a.footer-a.linkedin(href=`https://www.linkedin.com/in/hossein-khodabandeh/` style=`color:inherit;text-decoration:inherit;`) My Linkedin

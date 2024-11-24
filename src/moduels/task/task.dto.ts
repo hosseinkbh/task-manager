@@ -28,10 +28,6 @@ export class CreateTaskDto {
   @IsOptional()
   @IsEnum(PriorityEnum)
   priority?: PriorityEnum;
-  @IsString()
-  @IsOptional()
-  @IsEnum(StatuEnum)
-  status?: StatuEnum;
 }
 export class UpdateTaskDto {
   @IsString()
@@ -60,6 +56,7 @@ export class UpdateTaskDto {
 export class FilterListTasksDto {
   @IsString()
   @MaxLength(100)
+  @IsOptional()
   title?: string;
   @IsString()
   @IsMongoId()

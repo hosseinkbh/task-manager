@@ -28,6 +28,9 @@ export class SingInDto {
   @MinLength(8)
   password!: string;
   @IsString()
+  @MinLength(8)
+  confirmPassword!: string;
+  @IsString()
   @MinLength(2)
   @MaxLength(20)
   first_name!: string;

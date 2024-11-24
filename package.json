@@ -4,7 +4,7 @@
   "description": "personal app for managing tasks and track them.",
   "main": "index.js",
   "scripts": {
-    "dev": "export NODE_ENV=development && nest start",
+    "dev": "export NODE_ENV=development && nest start -w src/main.ts",
     "start": "nest start",
     "test": "vitest run vitest.config.ts"
   },
@@ -38,6 +38,7 @@
     "express-useragent": "^1.0.15",
     "helmet": "^8.0.0",
     "ioredis": "^5.4.1",
+    "jquery": "^3.7.1",
     "mongoose": "^8.7.0",
     "mongoose-aggregate-paginate-v2": "^1.1.2",
     "mongoose-paginate-v2": "^1.8.5",

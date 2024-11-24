@@ -1,0 +1,26 @@
+.form-control {
+    padding: 0.4rem;
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+    transition: opacity 1.5s ease, height 1.5s ease, visibility 1.5s ease;
+}
+
+.visible {
+    opacity: 1;
+    visibility: visible;
+    height: auto;
+    transition: opacity 2s ease, height 2s ease, visibility 2s ease;
+}
+
+.top-left-text {
+    position: absolute;
+    top: 25px;
+    left: 30px;
+    font-size: 1.25rem;
+    font-weight: bold;
+}

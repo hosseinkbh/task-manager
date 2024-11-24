@@ -1,0 +1,73 @@
+doctype html
+html
+    head
+        title Board
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css")
+        link(rel="stylesheet", href="/board.css")
+        link(rel="stylesheet", href="/footer.css")
+        script(src="/jquery-3.7.1.min.js")
+        script(type='text/javascript', src='/board.js')
+body
+    a(href=`/` style=`color:inherit;text-decoration:inherit;`).top-left-text Task Manager
+    button.btn.btn-primary.create-button(type="button" style="" onclick="window.location='/task/view/create'") Create Task
+    .container.mt-5
+        .task-board
+            .column(data-status=StatuEnum.TODO)
+                h2(style="font-weight: bold;") To Do
+                if (tasks)
+                    each task, index in tasks
+                        if (task.status === StatuEnum.TODO)
+                            .task(draggable="true" data-id=task._id data-priority=task.priority)
+                                .task-id #{task.task_id}
+                                .task-title #{task.title}
+                                .task-desc  #{task.description}
+                                .task-priority #{task.priority}
+            .column(data-status=StatuEnum.IN_PROGRESS)
+                h2(style="font-weight: bold;") In Progress
+                if (tasks)
+                    each task, index  in tasks
+                        if (task.status === StatuEnum.IN_PROGRESS)
+                            .task(draggable="true" data-id=task._id data-priority=task.priority)
+                                .task-id #{task.task_id}
+                                .task-title #{task.title}
+                                .task-desc #{task.description}
+                                .task-priority #{task.priority}
+            .column(data-status=StatuEnum.DONE)
+                h2(style="font-weight: bold;") Done
+                if (tasks)
+                    each task, index  in tasks
+                        if (task.status === StatuEnum.DONE)
+                            .task(draggable="true" data-id=task._id data-priority=task.priority)
+                                .task-id #{task.task_id}
+                                .task-title #{task.title}
+                                .task-desc #{task.description}
+                                .task-priority #{task.priority}
+    .sidebar.hidden
+        button.btn.btn-primary.close-button() Close
+        button.btn.btn-primary.edit-button() Edit
+        .container.mt-5
+            .task-details
+                h2
+                    b Task Details :
+                .col-md-12
+                    label(for="task-detail-taskId" class="form-label mb-1") Task ID:
+                    input#task-detail-taskId.description.form-control(type="text" readonly=true)
+                .col-md-12
+                    label(for="task-detail-title" class="form-label mb-1") Task Title:
+                    input#task-detail-title.description.form-control(type="text" readonly=true)
+                .col-md-12
+                    label(for="task-detail-assigne" class="form-label mb-1") Assigne:
+                    input#task-detail-assigne.description.form-control(type="text" readonly=true)
+                .col-md-12
+                    label(for="task-detail-priority" class="form-label mb-1") Priority:
+                    input#task-detail-priority.description.form-control(type="text" readonly=true)
+                .col-md-12
+                    label(for="task-detail-description" class="form-label mb-1") Description:
+                    textarea#task-detail-description.description.form-control(rows="10" cols="40" readonly=true)
+                .col-md-12
+                    input#task-detail_id.detail_id.form-control(readonly=true style="display:none;")
+    footer.footerStyle
+        p.footer-p Made By Hossein Khodabandeh ❤️
+        a.footer-a.linkedin(href=`https://www.linkedin.com/in/hossein-khodabandeh/` style=`color:inherit;text-decoration:inherit;`) My Linkedin

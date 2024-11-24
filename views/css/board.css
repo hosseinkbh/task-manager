@@ -1,0 +1,120 @@
+body {
+    font-family: Arial, sans-serif;
+    height: 100vh;
+}
+
+.container {
+    transition: margin-right 1s ease;
+    margin-right: 15%;
+}
+
+.container.shrink {
+    margin-right: 20%;
+}
+
+.create-button.button_shrink {
+    margin-right: 20%;
+}
+
+.task-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.column {
+    margin-top: 7%;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.column h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.task {
+    background-color: #fff;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    cursor: grab;
+}
+
+.task-id {
+    display: none;
+}
+
+.dragging {
+    opacity: 0.5;
+}
+
+.top-left-text {
+    position: absolute;
+    top: 25px;
+    left: 30px;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.create-button {
+    transition: margin-right 1s ease;
+    margin-right: 20px;
+    position: absolute;
+    color: white;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+}
+
+.sidebar {
+    width: 20%; /* Width of the sidebar */
+    position: fixed;
+    right: -20%; /* Initially hidden off-screen */
+    top: 0;
+    height: 100%;
+    background-color: #f4f4f4;
+    transition: right 1s ease; /* Smooth transition */
+    z-index: 1000; /* Ensure it stays above other content */
+}
+
+.sidebar.open {
+    right: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.close-button {
+    position: absolute;
+    color: white;
+    top: 15px;
+    right: 15px;
+    padding: 10px 20px;
+}
+
+.edit-button {
+    position: absolute;
+    color: white;
+    top: 15px;
+    left: 15px;
+    padding: 10px 20px;
+}
+
+.task-details {
+    margin-top: 80px;
+    margin-left: 15px;
+    margin-right: 15px;
+
+}
+
+.task-priority {
+    position: relative;
+    left: 85%;
+    font-weight: bolder;
+}

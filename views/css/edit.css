@@ -1,0 +1,26 @@
+.form-control {
+    padding: 0.4rem;
+}
+
+.top-left-text {
+    position: absolute;
+    top: 25px;
+    left: 30px;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.875rem;
+    display: none;
+}
+
+.description {
+    width: 100%;
+    height: 120px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}

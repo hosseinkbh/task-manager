@@ -44,9 +44,7 @@ export class TaskService {
         let queryFilter: any = {};
         queryFilter = this.removeNulls(filter);
         if (filter.title) queryFilter.title = {$regex: `/${filter.title}/`};
-        const a = await this.taskModel.find(queryFilter).populate("assigne", ["first_name", "last_name"]);
-        console.log(a);
-        return a;
+        return this.taskModel.find(queryFilter).populate("assigne", ["first_name", "last_name"]);
     }
 
     async listAssigneTasks(session: SessionType) {

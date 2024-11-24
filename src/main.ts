@@ -44,10 +44,11 @@ async function bootstrap() {
             forbidNonWhitelisted: true,
         })
     );
+    app.setViewEngine("pug");
+    app.setBaseViewsDir(join(process.cwd(), "views"));
     app.useStaticAssets(join(process.cwd(), "views/css"))
     app.useStaticAssets(join(process.cwd(), "views/js"));
-    app.setBaseViewsDir(join(process.cwd(), "views"));
-    app.setViewEngine("pug");
+    app.useStaticAssets(join(process.cwd(), "views/images"));
 
     app.use(
         morgan((tokens, req, res) => {

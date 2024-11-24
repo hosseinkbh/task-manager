@@ -1,19 +1,19 @@
 
 .footerStyle {
-    min-height: 100px;
+    min-height: 120px;
     background-color: #f0f0f0;
+    padding: 0.5%;
+
 }
 
 .footer-p {
-    position: absolute;
+    position: relative;
     margin-top: 1%;
-    margin-bottom: 2.5%;
+    margin-bottom: 1%;
     margin-left: 2%;
 }
 
 .footer-a {
-    position: absolute;
-    margin-top: 3%;
-    margin-bottom: 1%;
+    position: relative;
     margin-left: 2%;
 }

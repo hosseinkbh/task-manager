@@ -19,7 +19,7 @@ body
                     input#loginWithPhone(type="radio" class="btn-check" name="loginMethod" autocomplete="off")
                     label.btn.btn-outline-primary(for="loginWithPhone") Phone Number
 
-        form#signInForm(action="/sign-in" method="POST" class="w-50 mx-auto")
+        form#logInForm(action="/user/login" method="POST" class="w-50 mx-auto")
             .row.g-2.mt-3
                 .col-md-12
                     // Email Field (default visible)
@@ -32,8 +32,8 @@ body
                         input.form-control(type="tel" id="phoneNumber" name="phoneNumber")
             .row.g-2.mt-3
                 .col-md-12
-                    label(for="password" class="form-label mb-1") Password:
-                    input.form-control(type="password" id="password" name="password" required)
+                    label(for="pass" class="form-label mb-1") Password:
+                    input.form-control(type="password" id="pass" name="pass" required)
             .row.mt-3.justify-content-center
                 .col-auto
                     button.btn.btn-primary(type="submit") Log In

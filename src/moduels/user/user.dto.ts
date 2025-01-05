@@ -7,17 +7,6 @@ import {
   MinLength,
 } from "class-validator";
 
-export class LoginDto {
-  @IsEmail()
-  @IsString()
-  @MinLength(10)
-  @MaxLength(70)
-  email!: string;
-  @IsString()
-  @MinLength(8)
-  pass!: string;
-}
-
 export class SingInDto {
   @IsEmail()
   @IsString()
@@ -43,6 +32,7 @@ export class SingInDto {
   @MaxLength(11)
   phoneNumber!: string;
 }
+
 export class UpdateUserDto {
   @IsEmail()
   @IsString()
@@ -66,6 +56,7 @@ export class UpdateUserDto {
   @IsOptional()
   phoneNumber!: string;
 }
+
 export class updatePassDto {
   @IsString()
   @MinLength(8)

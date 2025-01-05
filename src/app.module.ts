@@ -8,9 +8,12 @@ import { ThrottlerStorageRedisService } from "nestjs-throttler-storage-redis";
 import { AcceptLanguageResolver, I18nModule, QueryResolver } from "nestjs-i18n";
 import { join } from "path";
 import { AppController } from "./app.controller";
+import { SessionSerializer } from "./moduels/auth/session.serializer";
+import { AuthModule } from "./moduels/auth/auth.module";
 
 @Module({
   imports: [
+    AuthModule,
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -57,6 +60,7 @@ import { AppController } from "./app.controller";
     }),
   ],
   controllers: [AppController],
+  providers: [SessionSerializer],
   // providers: [{ provide: APP_GUARD, useClass: CustomThrottlerGuard }],
 })
 export class AppModule {}

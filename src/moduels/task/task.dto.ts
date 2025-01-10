@@ -6,8 +6,8 @@ import {
   IsString,
   MaxLength,
   MinLength,
-} from "class-validator";
-import { PriorityEnum, StatuEnum } from "../../models/task.model";
+} from 'class-validator';
+import { PriorityType, TaskStatus } from '../../models/task.model';
 
 export class CreateTaskDto {
   @IsString()
@@ -23,11 +23,11 @@ export class CreateTaskDto {
   @IsString()
   @IsMongoId()
   @IsOptional()
-  assigne?: string | null;
+  assign?: string | null;
   @IsString()
   @IsOptional()
-  @IsEnum(PriorityEnum)
-  priority?: PriorityEnum;
+  @IsEnum(PriorityType)
+  priority?: PriorityType;
 }
 export class UpdateTaskDto {
   @IsString()
@@ -43,15 +43,15 @@ export class UpdateTaskDto {
   @IsString()
   @IsMongoId()
   @IsOptional()
-  assigne?: string | null;
+  assign?: string | null;
   @IsString()
   @IsOptional()
-  @IsEnum(PriorityEnum)
-  priority?: PriorityEnum;
+  @IsEnum(PriorityType)
+  priority?: PriorityType;
   @IsString()
   @IsOptional()
-  @IsEnum(StatuEnum)
-  status?: StatuEnum;
+  @IsEnum(TaskStatus)
+  status?: TaskStatus;
 }
 export class FilterListTasksDto {
   @IsString()
@@ -61,19 +61,19 @@ export class FilterListTasksDto {
   @IsString()
   @IsMongoId()
   @IsOptional()
-  assigne?: string | null;
+  assign?: string | null;
   @IsString()
   @IsMongoId()
   @IsOptional()
   createdBy?: string | null;
   @IsString()
   @IsOptional()
-  @IsEnum(PriorityEnum)
-  priority?: PriorityEnum;
+  @IsEnum(PriorityType)
+  priority?: PriorityType;
   @IsString()
   @IsOptional()
-  @IsEnum(StatuEnum)
-  status?: StatuEnum;
+  @IsEnum(TaskStatus)
+  status?: TaskStatus;
 }
 
 export class MongoIdDto {

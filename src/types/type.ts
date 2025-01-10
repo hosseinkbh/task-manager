@@ -1,16 +1,16 @@
-import { Session, SessionData } from "express-session";
+import { Session, SessionData } from 'express-session';
 
 export type SessionType = Session & SessionData;
 
-declare module "express-session" {
+declare module 'express-session' {
   interface SessionData {
     isLoggedIn: boolean;
     user: {
-      id: String;
-      lastName: String;
-      firstName: String;
-      email: String;
-      phoneNumber: String;
+      id: string;
+      lastName: string;
+      firstName: string;
+      email: string;
+      phoneNumber: string;
     };
   }
 }

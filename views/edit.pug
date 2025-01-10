@@ -18,10 +18,10 @@ html
                 .row.g-2.mt-2
                     .col-md-12
                         label(for="assigne" class="form-label mb-1") Assigne:
-                        select.form-control(type="assigne" id="assigne" name="assigne" required)
+                        select.form-control(type="assigne" id="assigne" name="assign" required)
                             each user in users
-                                option(value=user._id, selected=((task.assigne && task.assigne._id && task.assigne._id === user._id))) #{user.first_name + " " + user.last_name}
-                            option(value=null selected=!task.assigne ) NOT ASSIGNED
+                                option(value=user._id, selected=((task.assign && task.assign._id && task.assign._id === user._id))) #{user.firstName + " " + user.lastName}
+                            option(value=null selected=!task.assign ) NOT ASSIGNED
                 .row.g-2.mt-2
                     .col-md-12
                         label(for="priority" class="form-label mb-1") Priority:

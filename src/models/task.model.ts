@@ -4,7 +4,7 @@ import paginate from 'mongoose-paginate-v2';
 import { UserModel } from './user.model';
 
 export enum PriorityType {
-  HIGH = 'ARCHIVE',
+  HIGH = 'HIGH',
   MEDIUM = 'MEDIUM',
   LOW = 'LOW',
 }

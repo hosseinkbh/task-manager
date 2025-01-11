@@ -5,7 +5,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, UpdateQuery } from 'mongoose';
 import { SingInDto, updatePassDto, UpdateUserDto } from './user.dto';
 import bcrypt, { compare } from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
@@ -47,12 +47,12 @@ export class UserService {
   }
 
   async updateUserInfo(body: UpdateUserDto, session: SessionType) {
-    const filledBody: any = {};
-    filledBody.email = body.email && body.email;
-    filledBody.firstName = body.firstName && body.firstName;
-    filledBody.lastNAme = body.lastName && body.lastName;
-    filledBody.phoneNumber = body.phoneNumber && body.phoneNumber;
-    await this.userModel.updateOne({ _id: session.user.id }, { ...filledBody });
+    const updatedValues: UpdateQuery<UserModel> = {};
+    body.email && (updatedValues.email = body.email);
+    body.firstName && (updatedValues.firstName = body.firstName);
+    body.lastName && (updatedValues.lastName = body.lastName);
+    body.phoneNumber && (updatedValues.phoneNumber = body.phoneNumber);
+    await this.userModel.updateOne({ _id: session.user.id }, updatedValues);
   }
 
   async updatePass(body: updatePassDto, session: SessionType) {

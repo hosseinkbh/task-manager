@@ -5,6 +5,7 @@ html
         meta(charset="UTF-8")
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
         link(rel="stylesheet", href="/bootstrap.min.css")
+        link(rel="stylesheet", href="/footer.css")
         link(rel="stylesheet", href="/index.css")
     body
         .container.mt-4
@@ -15,3 +16,9 @@ html
                         button.btn.btn-primary(type="button" onclick="window.location='/auth/view/sign-in'") Sign In
                     .col-auto
                         button.btn.btn-secondary(type="button" onclick="window.location='/auth/view/log-in'") Log In
+    footer.footerStyle
+        p.footer-p Made By Hossein Khodabandeh ❤️
+        a.footer-a(href=`https://www.linkedin.com/in/hossein-khodabandeh/`)
+            img.linkedin(src="/linkedin.svg" alt="LinkedIn Logo")
+        a.footer-a(href=`https://github.com/hosseinkbh`)
+            img.github(src="/github.svg" alt="GitHub Logo")                    

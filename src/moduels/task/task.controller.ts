@@ -4,11 +4,11 @@ import {
   Get,
   Param,
   Post,
-  Put,
   Query,
   Redirect,
   Render,
   Session,
+  UseGuards,
 } from '@nestjs/common';
 import {
   CreateTaskDto,
@@ -19,8 +19,9 @@ import {
 import { TaskService } from './task.service';
 import { SessionType } from '../../types/type';
 import { PriorityType, TaskStatus } from '../../models/task.model';
+import { SessionAuthGuard } from '../../guards/sessionAuth.guard';
 
-// @UseGuards(AuthGuard)
+@UseGuards(SessionAuthGuard)
 @Controller('task')
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}

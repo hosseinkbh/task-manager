@@ -29,6 +29,14 @@ export default class EnvironmentVariables {
   @IsNotEmpty()
   @IsNumber()
   THROTTLER_REDIS_DB!: number;
+
+  @IsNotEmpty()
+  @IsString()
+  SESSION_SECRET!: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  SESSION_TIME!: number;
   static validate(config: Record<string, unknown>) {
     const validatedConfig = plainToInstance(EnvironmentVariables, config, {
       enableImplicitConversion: true,

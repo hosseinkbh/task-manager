@@ -5,7 +5,7 @@ import {
   IsString,
   MaxLength,
   MinLength,
-} from "class-validator";
+} from 'class-validator';
 
 export class SingInDto {
   @IsEmail()
@@ -22,11 +22,11 @@ export class SingInDto {
   @IsString()
   @MinLength(2)
   @MaxLength(20)
-  first_name!: string;
+  firstName!: string;
   @IsString()
   @MinLength(2)
   @MaxLength(20)
-  last_name!: string;
+  lastName!: string;
   @IsString()
   @MinLength(11)
   @MaxLength(11)
@@ -44,12 +44,12 @@ export class UpdateUserDto {
   @MinLength(2)
   @MaxLength(20)
   @IsOptional()
-  first_name!: string;
+  firstName!: string;
   @IsString()
   @MinLength(2)
   @MaxLength(20)
   @IsOptional()
-  last_name!: string;
+  lastName!: string;
   @IsString()
   @MinLength(11)
   @MaxLength(11)

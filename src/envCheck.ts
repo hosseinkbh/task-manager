@@ -1,10 +1,10 @@
-import { plainToInstance } from "class-transformer";
-import { IsNotEmpty, IsNumber, IsString, validateSync } from "class-validator";
+import { plainToInstance } from 'class-transformer';
+import { IsNotEmpty, IsNumber, IsString, validateSync } from 'class-validator';
 
 export enum NodeEnvironments {
-  PRODUCTION = "production",
-  DEVELOPMENT = "development",
-  TEST = "test",
+  PRODUCTION = 'production',
+  DEVELOPMENT = 'development',
+  TEST = 'test',
 }
 
 export default class EnvironmentVariables {

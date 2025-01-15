@@ -4,7 +4,7 @@
   "description": "personal app for managing tasks and track them.",
   "main": "index.js",
   "scripts": {
-    "dev": "export NODE_ENV=development && nest start -w src/main.ts",
+    "dev": "cross-env NODE_ENV=development && nest start -w src/main.ts",
     "start": "nest start",
     "test": "vitest run vitest.config.ts"
   },
@@ -25,14 +25,6 @@
     "@nestjs/platform-express": "^10.4.4",
     "@nestjs/terminus": "^10.2.3",
     "@nestjs/throttler": "^6.2.1",
-    "@types/bcrypt": "^5.0.2",
-    "@types/express-session": "^1.18.0",
-    "@types/mongoose": "^5.11.97",
-    "@types/mongoose-aggregate-paginate-v2": "^1.0.12",
-    "@types/morgan": "^1.9.9",
-    "@types/node": "^22.7.4",
-    "@types/passport-local": "^1.0.38",
-    "@types/pug": "^2.0.10",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
@@ -55,6 +47,16 @@
     "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/express-session": "^1.18.0",
+    "@types/mongoose": "^5.11.97",
+    "@types/mongoose-aggregate-paginate-v2": "^1.0.12",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^22.7.4",
+    "@types/passport-local": "^1.0.38",
+    "@types/pug": "^2.0.10",
+    "cross-env": "^7.0.3",
+    "prettier": "^3.4.2",
     "source-map-support": "^0.5.21"
   }
 }

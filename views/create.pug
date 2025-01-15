@@ -18,9 +18,9 @@ body
             .row.g-2.mt-2
                 .col-md-12
                     label(for="assigne" class="form-label mb-1") Assigne:
-                    select.form-control(type="assigne" id="assigne" name="assigne" required)
+                    select.form-control(type="assigne" id="assigne" name="assign" required)
                         each user in users
-                            option(value=user._id, selected=(user && user == user)) #{user.first_name + " " + user.last_name}
+                            option(value=user._id, selected=(user && user == user)) #{user.firstName + " " + user.lastName}
             .row.g-2.mt-2
                 .col-md-12
                     label(for="priority" class="form-label mb-1") Priority:

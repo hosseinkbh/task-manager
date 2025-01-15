@@ -1,13 +1,5 @@
 node_modules
 dist
 .vscode
-/.idea/watcherTasks.xml
-/.idea/vcs.xml
-/.idea/task-manager.iml
-/.idea/prettier.xml
-/.idea/modules.xml
-/.idea/jsLibraryMappings.xml
-/.idea/.gitignore
-package-lock.json
-yarn.lock
-.vscode/settings.json
+.idea
+

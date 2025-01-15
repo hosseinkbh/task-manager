@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             assigne_text = assigne.firstName + ' ' + assigne.lastName;
           }
           document.getElementById('task-detail-taskId').value =
-            response.task_id;
+            response.taskId;
           document.getElementById('task-detail_id').value = response._id;
           document.getElementById('task-detail-title').value = response.title;
           document.getElementById('task-detail-assigne').value = assigne_text;

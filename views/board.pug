@@ -14,31 +14,31 @@ body
     button.btn.btn-primary.create-button(type="button" style="" onclick="window.location='/task/view/create'") Create Task
     .container.mt-5
         .task-board
-            .column(data-status=TaskStatus.TODO)
+            .column(data-status=StatusEnum.TODO)
                 h2(style="font-weight: bold;") To Do
                 if (tasks)
                     each task, index in tasks
-                        if (task.status === TaskStatus.TODO)
+                        if (task.status === StatusEnum.TODO)
                             .task(draggable="true" data-id=task._id data-priority=task.priority)
                                 .task-id #{task.task_id}
                                 .task-title #{task.title}
                                 .task-desc  #{task.description}
                                 .task-priority #{task.priority}
-            .column(data-status=TaskStatus.IN_PROGRESS)
+            .column(data-status=StatusEnum.IN_PROGRESS)
                 h2(style="font-weight: bold;") In Progress
                 if (tasks)
                     each task, index  in tasks
-                        if (task.status === TaskStatus.IN_PROGRESS)
+                        if (task.status === StatusEnum.IN_PROGRESS)
                             .task(draggable="true" data-id=task._id data-priority=task.priority)
                                 .task-id #{task.task_id}
                                 .task-title #{task.title}
                                 .task-desc #{task.description}
                                 .task-priority #{task.priority}
-            .column(data-status=TaskStatus.DONE)
+            .column(data-status=StatusEnum.DONE)
                 h2(style="font-weight: bold;") Done
                 if (tasks)
                     each task, index  in tasks
-                        if (task.status === TaskStatus.DONE)
+                        if (task.status === StatusEnum.DONE)
                             .task(draggable="true" data-id=task._id data-priority=task.priority)
                                 .task-id #{task.task_id}
                                 .task-title #{task.title}

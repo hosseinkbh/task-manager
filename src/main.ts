@@ -5,10 +5,11 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import { I18nValidationExceptionFilter, I18nValidationPipe } from 'nestjs-i18n';
 import { AppModule } from './app.module';
-import EnvironmentVariables from './envCheck';
+import EnvironmentVariables, { NodeEnvironments } from './envCheck';
 import { join } from 'path';
 import session from 'express-session';
-import passport from 'passport';
+import { RedisStore } from 'connect-redis';
+import Redis from 'ioredis';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -29,16 +30,31 @@ async function bootstrap() {
       },
     }),
   );
+
+  const sessionStore = new RedisStore({
+    client: new Redis(
+      configService.getOrThrow('REDIS_PORT'),
+      configService.getOrThrow('REDIS_HOST'),
+      {
+        db: 10,
+      },
+    ),
+    prefix: 'session:',
+  });
+
   app.use(
     session({
-      secret: 'your-session-secret',
+      secret: configService.getOrThrow('SESSION_SECRET'),
       resave: false,
       saveUninitialized: false,
-      cookie: { secure: false },
+      cookie: {
+        secure: process.env.NODE_DEV == NodeEnvironments.DEVELOPMENT,
+        maxAge: +configService.getOrThrow('SESSION_TIME'),
+        // 120min
+      },
+      store: sessionStore,
     }),
   );
-  app.use(passport.initialize());
-  app.use(passport.session());
 
   app.useGlobalPipes(
     new I18nValidationPipe({

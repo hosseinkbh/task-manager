@@ -26,8 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (assigne && assigne.firstName && assigne.lastName) {
             assigne_text = assigne.firstName + ' ' + assigne.lastName;
           }
-          document.getElementById('task-detail-taskId').value =
-            response.taskId;
+          document.getElementById('task-detail-taskId').value = response.taskId;
           document.getElementById('task-detail_id').value = response._id;
           document.getElementById('task-detail-title').value = response.title;
           document.getElementById('task-detail-assigne').value = assigne_text;
@@ -54,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const status = column.getAttribute('data-status');
         $.ajax({
           url: `/task/update/${draggedTask.dataset.id}`,
-          method: 'PUT',
+          method: 'POST',
           data: { status: status },
         });
       }

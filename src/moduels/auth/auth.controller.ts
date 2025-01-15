@@ -11,9 +11,9 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Request } from 'express';
-import { AuthGuard } from '@nestjs/passport';
-import { SingInDto } from '../user/user.dto';
 import { SessionType } from '../../types/type';
+import { LoginDto, SingUpDto } from './auth.dto';
+import { SessionAuthGuard } from '../../guards/sessionAuth.guard';
 
 @Controller('/auth')
 export class AuthController {
@@ -23,27 +23,27 @@ export class AuthController {
   @Render('log-in')
   logInView() {}
 
+  @Redirect('/task/board')
   @Post('/login')
-  @UseGuards(AuthGuard('local'))
-  async login(@Req() req: Request) {
-    return req.user;
+  async login(@Body() payload: LoginDto, @Session() session: SessionType) {
+    await this.authService.login(payload, session);
   }
 
-  @Get('/view/sign-in')
-  @Render('sign-in')
-  signInView() {}
+  @Get('/view/sign-up')
+  @Render('sign-up')
+  signupView() {}
 
-  @Redirect('/')
-  @Post('/sign-in')
-  async signIn(@Body() body: SingInDto, @Session() session: SessionType) {
-    return this.authService.signIn(body, session);
+  @Redirect('/task/board')
+  @Post('/sign-up')
+  async signup(@Body() body: SingUpDto, @Session() session: SessionType) {
+    return this.authService.signup(body, session);
   }
 
   @Redirect('/')
-  @Post('logout')
-  logout(@Req() req: Request): any {
-    req.session.destroy(() => {});
-    return;
+  @UseGuards(SessionAuthGuard)
+  @Get('logout')
+  logout(@Session() session: SessionType): any {
+    this.authService.logout(session);
   }
 
   @Post('/status')

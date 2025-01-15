@@ -12,7 +12,7 @@ import { AuthModule } from './moduels/auth/auth.module';
 
 @Module({
   imports: [
-    AuthModule,
+    ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -29,8 +29,6 @@ import { AuthModule } from './moduels/auth/auth.module';
         },
       }),
     }),
-    TaskModule,
-    UserModule,
     I18nModule.forRoot({
       fallbackLanguage: 'fa',
       loaderOptions: {
@@ -59,6 +57,9 @@ import { AuthModule } from './moduels/auth/auth.module';
         };
       },
     }),
+    AuthModule,
+    TaskModule,
+    UserModule,
   ],
   controllers: [AppController],
   // providers: [{ provide: APP_GUARD, useClass: CustomThrottlerGuard }],

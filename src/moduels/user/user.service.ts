@@ -1,12 +1,11 @@
 import {
-  ConflictException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, UpdateQuery } from 'mongoose';
-import { SingInDto, updatePassDto, UpdateUserDto } from './user.dto';
+import { updatePassDto, UpdateUserDto } from './user.dto';
 import bcrypt, { compare } from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import { UserModel } from '../../models/user.model';
@@ -19,32 +18,6 @@ export class UserService {
     private readonly userModel: Model<UserModel>,
     private readonly configService: ConfigService,
   ) {}
-
-  async signIn(body: SingInDto, session: SessionType) {
-    const alreadyRegistered = await this.userModel.findOne({
-      $or: [{ email: body.email }, { phoneNumber: body.phoneNumber }],
-    });
-    if (alreadyRegistered)
-      throw new ConflictException(
-        'a user with this email or phoneNumber already registered !!!',
-      );
-    const encryptedPass = await this.encryptPass(body.password);
-    const user = await this.userModel.create({
-      password: encryptedPass,
-      email: body.email,
-      firstName: body.firstName,
-      lastName: body.lastName,
-      phoneNumber: body.phoneNumber,
-    });
-    session.isLoggedIn = true;
-    session.user = {
-      id: user.id,
-      lastName: user.lastName,
-      firstName: user.firstName,
-      email: user.email,
-      phoneNumber: user.phoneNumber,
-    };
-  }
 
   async updateUserInfo(body: UpdateUserDto, session: SessionType) {
     const updatedValues: UpdateQuery<UserModel> = {};
@@ -65,14 +38,6 @@ export class UserService {
       { _id: session.user.id },
       { password: encryptedPass },
     );
-  }
-
-  async getUserByCredentials(identifier: string) {
-    const query: { email?: string; phoneNumber?: string } = {};
-    identifier.includes('@')
-      ? (query.email = identifier)
-      : (query.phoneNumber = identifier);
-    return this.userModel.findOne(query);
   }
 
   private async encryptPass(pass: string) {

@@ -5,6 +5,7 @@ html
         meta(charset="UTF-8")
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
         link(rel="stylesheet", href="/bootstrap.min.css")
+        link(rel="stylesheet", href="/footer.css")
         link(rel="stylesheet", href="/edit.css")
     body
         a(href=`/` style=`color:inherit;text-decoration:inherit;`).top-left-text Task Manager
@@ -18,10 +19,10 @@ html
                 .row.g-2.mt-2
                     .col-md-12
                         label(for="assigne" class="form-label mb-1") Assigne:
-                        select.form-control(type="assigne" id="assigne" name="assign" required)
+                        select.form-control(type="assigne" id="assigne" name="assign")
                             each user in users
                                 option(value=user._id, selected=((task.assign && task.assign._id && task.assign._id === user._id))) #{user.firstName + " " + user.lastName}
-                            option(value=null selected=!task.assign ) NOT ASSIGNED
+                            option(value=null selected=!task.assign ) not assigned
                 .row.g-2.mt-2
                     .col-md-12
                         label(for="priority" class="form-label mb-1") Priority:
@@ -31,10 +32,16 @@ html
                 .row.g-2.mt-2
                     .col-md-12
                         label(for="description" class="form-label mb-1") Description:
-                        textarea.description.form-control(type="text" id="description" minlength="0" maxlength="5000" name="description"  rows="10" cols="40" required)
+                        textarea.description.form-control(type="text" id="description" minlength="0" maxlength="5000" name="description"  rows="10" cols="40")
                             | #{task.description}
                 .row.mt-3.justify-content-center
                     .col-auto
                         button.btn.btn-primary(type="submit") Edit
                     .col-auto
                         button.btn.btn-danger(type="button" onclick="window.location='/task/board'") Cansel
+    footer.footerStyle
+        p.footer-p Made By Hossein Khodabandeh ❤️
+        a.footer-a(href=`https://www.linkedin.com/in/hossein-khodabandeh/`)
+            img.linkedin(src="/linkedin.svg" alt="LinkedIn Logo")
+        a.footer-a(href=`https://github.com/hosseinkbh`)
+            img.github(src="/github.svg" alt="GitHub Logo")                        

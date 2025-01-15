@@ -5,6 +5,7 @@ html
         meta(charset="UTF-8")
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
         link(rel="stylesheet", href="/bootstrap.min.css")
+        link(rel="stylesheet", href="/footer.css")
         link(rel="stylesheet", href="/sign-in.css")
         script(type='text/javascript', src='/sign-in.js')
 body
@@ -25,6 +26,10 @@ body
                     input.form-control(type="string" id="email" name="email" minlength="10" maxlength="70" required)
             .row.g-2.mt-2
                 .col-md-12
+                    label(for="phoneNumber" class="form-label mb-1") Phone Number:
+                    input.form-control(type="tel" id="phoneNumber" name="phoneNumber" minlength="11" maxlength="11" required)
+            .row.g-2.mt-2
+                .col-md-12
                     label(for="password" class="form-label mb-1") Password:
                     input.form-control(type="password" id="password" name="password" minlength="8" maxlength="30" required)
             .row.g-2.mt-2
@@ -32,12 +37,14 @@ body
                     label(for="confirmPassword" class="form-label mb-1") Confirm Password:
                     input.form-control(type="password" id="confirmPassword" name="confirmPassword" minlength="8" maxlength="30" required)
                     span.error-message#passwordError Passwords do not match.
-            .row.g-2.mt-2
-                .col-md-12
-                    label(for="phoneNumber" class="form-label mb-1") Phone Number:
-                    input.form-control(type="tel" id="phoneNumber" name="phoneNumber" minlength="11" maxlength="11" required)
             .row.mt-3.justify-content-center
                 .col-auto
                     button.btn.btn-primary(type="submit") Sign In
                 .col-auto
                     button.btn.btn-danger(type="button" onclick="window.location='/'") Back
+footer.footerStyle
+    p.footer-p Made By Hossein Khodabandeh ❤️
+    a.footer-a(href=`https://www.linkedin.com/in/hossein-khodabandeh/`)
+        img.linkedin(src="/linkedin.svg" alt="LinkedIn Logo")
+    a.footer-a(href=`https://github.com/hosseinkbh`)
+        img.github(src="/github.svg" alt="GitHub Logo")                

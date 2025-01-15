@@ -20,7 +20,7 @@ body
                     each task, index in tasks
                         if (task.status === StatusEnum.TODO)
                             .task(draggable="true" data-id=task._id data-priority=task.priority)
-                                .task-id #{task.task_id}
+                                .task-id #{task.taskId}
                                 .task-title #{task.title}
                                 .task-desc  #{task.description}
                                 .task-priority #{task.priority}
@@ -30,7 +30,7 @@ body
                     each task, index  in tasks
                         if (task.status === StatusEnum.IN_PROGRESS)
                             .task(draggable="true" data-id=task._id data-priority=task.priority)
-                                .task-id #{task.task_id}
+                                .task-id #{task.taskId}
                                 .task-title #{task.title}
                                 .task-desc #{task.description}
                                 .task-priority #{task.priority}
@@ -40,7 +40,7 @@ body
                     each task, index  in tasks
                         if (task.status === StatusEnum.DONE)
                             .task(draggable="true" data-id=task._id data-priority=task.priority)
-                                .task-id #{task.task_id}
+                                .task-id #{task.taskId}
                                 .task-title #{task.title}
                                 .task-desc #{task.description}
                                 .task-priority #{task.priority}

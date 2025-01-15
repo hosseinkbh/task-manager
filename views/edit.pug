@@ -22,7 +22,7 @@ html
                         select.form-control(type="assigne" id="assigne" name="assign")
                             each user in users
                                 option(value=user._id, selected=((task.assign && task.assign._id && task.assign._id === user._id))) #{user.firstName + " " + user.lastName}
-                            option(value=null selected=!task.assign ) NOT ASSIGNED
+                            option(value=null selected=!task.assign ) not assigned
                 .row.g-2.mt-2
                     .col-md-12
                         label(for="priority" class="form-label mb-1") Priority:

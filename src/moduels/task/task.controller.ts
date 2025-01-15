@@ -58,7 +58,8 @@ export class TaskController {
     return { task: task, PriorityEnum: PriorityType, users: users };
   }
 
-  @Put('/update/:id')
+  @Redirect('/task/board')
+  @Post('/update/:id')
   async updateTask(
     @Session() session: SessionType,
     @Param() { id }: MongoIdDto,

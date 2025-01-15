@@ -18,7 +18,7 @@ html
                 .row.g-2.mt-2
                     .col-md-12
                         label(for="assigne" class="form-label mb-1") Assigne:
-                        select.form-control(type="assigne" id="assigne" name="assign" required)
+                        select.form-control(type="assigne" id="assigne" name="assign")
                             each user in users
                                 option(value=user._id, selected=((task.assign && task.assign._id && task.assign._id === user._id))) #{user.firstName + " " + user.lastName}
                             option(value=null selected=!task.assign ) NOT ASSIGNED
@@ -31,7 +31,7 @@ html
                 .row.g-2.mt-2
                     .col-md-12
                         label(for="description" class="form-label mb-1") Description:
-                        textarea.description.form-control(type="text" id="description" minlength="0" maxlength="5000" name="description"  rows="10" cols="40" required)
+                        textarea.description.form-control(type="text" id="description" minlength="0" maxlength="5000" name="description"  rows="10" cols="40")
                             | #{task.description}
                 .row.mt-3.justify-content-center
                     .col-auto

@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, RootFilterQuery, Types } from 'mongoose';
+import { isValidObjectId, Model, RootFilterQuery, Types } from 'mongoose';
 import { CreateTaskDto, FilterListTasksDto, UpdateTaskDto } from './task.dto';
 import { TaskModel, TaskStatus } from '../../models/task.model';
 import { SessionType } from '../../types/type';
@@ -23,7 +23,7 @@ export class TaskService {
       status: TaskStatus.TODO,
       assign: undefined,
     };
-    normalizedBody.assign &&
+    (normalizedBody.assign && isValidObjectId(normalizedBody.assign)) && 
       (task.assign = new Types.ObjectId(normalizedBody.assign));
 
     await this.taskModel.create(task);

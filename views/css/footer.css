@@ -1,16 +1,16 @@
-
 .footerStyle {
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
     min-height: 50px;
-    background-color: #f0f0f0;
+    background-color: #202325;
     padding: 0.5%;
 
 }
 
 .footer-p {
+    color: #dcdcdc;
     position: relative;
     margin-top: 0.5%;
     margin-bottom: 0.5%;
@@ -18,20 +18,20 @@
 }
 
 .footer-a {
-    color:inherit;
-    text-decoration:inherit;
+    color: inherit;
+    text-decoration: inherit;
     position: relative;
     margin-left: 1%;
 }
 
 .linkedin {
-    width:20px;
-    height:20px;
-    margin-right:8px
-
+    width: 20px;
+    height: 20px;
+    margin-right: 8px
 }
+
 .github {
-    width:20px;
-    height:20px;
-    margin-right:8px;
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
 }

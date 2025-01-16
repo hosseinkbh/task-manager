@@ -1,8 +1,25 @@
+body {
+    background-color: #181a1b;
+}
+
+h2 {
+    color: #dcdcdc;
+
+}
+
+label {
+    color: #dcdcdc;
+}
+
 .form-control {
+    background-color: #2c3032;
     padding: 0.4rem;
+    color: #dcdcdc;
+
 }
 
 .top-left-text {
+    color: #dcdcdc;
     position: absolute;
     top: 25px;
     left: 30px;

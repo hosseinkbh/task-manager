@@ -16,6 +16,9 @@ body {
 .create-button.button_shrink {
     margin-right: 20%;
 }
+.create-tag.button_shrink {
+    margin-right: 20%;
+}
 
 .task-board {
     display: grid;
@@ -75,7 +78,15 @@ body {
     right: 20px;
     padding: 10px 20px;
 }
-
+.create-tag {
+    transition: margin-right 1s ease;
+    margin-right: 20px;
+    position: absolute;
+    color: #dcdcdc;
+    top: 20px;
+    right: 150px;
+    padding: 10px 20px;
+}
 .sidebar {
     width: 20%;
     position: fixed;

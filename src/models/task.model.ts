@@ -2,6 +2,7 @@ import { ModelDefinition, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import paginate from 'mongoose-paginate-v2';
 import { UserModel } from './user.model';
+import { TagModel } from './tag.model';
 
 export enum PriorityType {
   HIGH = 'HIGH',
@@ -24,10 +25,10 @@ export class TaskModel {
   @Prop({ type: String, minlength: 1, maxlength: 100, required: true })
   title!: string;
   @Prop({ type: String, minlength: 0, maxlength: 5000 })
-  description?: string | null;
+  description?: string | undefined;
   @Prop({ type: String, ref: 'UserModel', required: true })
   createdBy!: Types.ObjectId | UserModel;
-  @Prop({ type: String, ref: 'UserModel', required: false, default: null })
+  @Prop({ type: String, ref: 'UserModel', required: false, default: undefined })
   assign?: Types.ObjectId | UserModel | undefined;
   @Prop({
     type: String,
@@ -38,6 +39,9 @@ export class TaskModel {
   priority?: PriorityType;
   @Prop({ type: String, enum: TaskStatus, default: TaskStatus.TODO })
   status?: TaskStatus;
+  @Prop({ type: String, ref: 'TagModel', required: false, default: undefined })
+  tag?: Types.ObjectId | TagModel | undefined;
+  
 }
 
 export const TaskSchema = SchemaFactory.createForClass(TaskModel);

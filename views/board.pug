@@ -11,7 +11,9 @@ html
         script(type='text/javascript', src='/board.js')
 body
     a(href=`/task/board` style=`color:#dcdcdc;text-decoration:inherit;`).top-left-text Task Manager
-    button.btn.btn-primary.create-button(type="button" style="" onclick="window.location='/task/view/create'") Create Task
+    button.btn.btn-primary.create-button(type="button" onclick="window.location='/task/view/create'") Create Task
+    button.btn.btn-primary.create-tag(type="button" onclick="window.location='/task/tag/view/create'") Create tag
+    
     .container.mt-5
         .task-board
             .column(data-status=StatusEnum.TODO)

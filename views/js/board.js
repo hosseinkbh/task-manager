@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const sidebar = document.querySelector('.sidebar');
   const container = document.querySelector('.container');
   const create_button = document.querySelector('.create-button');
+  const create_tag_button = document.querySelector('.create-tag');
+
   const task_priority = $('.task-priority');
   tasks.forEach((task) => {
     task.addEventListener('dragstart', (e) => {
@@ -38,6 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
           sidebar.classList.add('open');
           container.classList.add('shrink');
           create_button.classList.add('button_shrink');
+          create_tag_button.classList.add('button_shrink');
+
         },
       });
     });
@@ -69,6 +73,8 @@ document.addEventListener('DOMContentLoaded', () => {
     sidebar.classList.remove('open');
     container.classList.remove('shrink');
     create_button.classList.remove('button_shrink');
+    create_tag_button.classList.remove('button_shrink');
+
   });
   document.querySelector('.edit-button').addEventListener('click', () => {
     const id = document.getElementById('task-detail_id').value;

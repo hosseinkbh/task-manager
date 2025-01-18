@@ -9,10 +9,25 @@ import { AcceptLanguageResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AuthModule } from './moduels/auth/auth.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        applicationName: 'task-manager',
+        type: 'postgres',
+        host: configService.getOrThrow('POSTGRES_HOST'),
+        port: configService.getOrThrow('POSTGRES_PORT'),
+        password: configService.getOrThrow('POSTGRES_PASS'),
+        username: configService.getOrThrow('POSTGRES_USER'),
+        entities: [],
+        database: configService.getOrThrow('POSTGRES_DB'),
+      }),
+    }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

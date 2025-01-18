@@ -8,7 +8,7 @@ html
         link(rel="stylesheet", href="/footer.css")
         link(rel="stylesheet", href="/create.css")
 body
-    a(href=`/` style=`color:inherit;text-decoration:inherit;`).top-left-text Task Manager
+    a(href=`/` style=`text-decoration:inherit;`).top-left-text Task Manager
     .container.mt-4
         h2.text-center.mb-4 Create Task
         form#createTaskForm(action="/task/create" method="POST" class="w-50 mx-auto")

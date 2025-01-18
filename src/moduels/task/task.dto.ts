@@ -6,6 +6,7 @@ import {
   IsString,
   MaxLength,
   MinLength,
+  ValidateIf,
 } from 'class-validator';
 import { PriorityType, TaskStatus } from '../../models/task.model';
 
@@ -21,8 +22,9 @@ export class CreateTaskDto {
   @MaxLength(5000)
   description?: string;
   @IsString()
-  @IsMongoId()
+  @ValidateIf((o, value) => value == null)
   @IsOptional()
+  @IsMongoId()
   assign?: string | null;
   @IsString()
   @IsOptional()

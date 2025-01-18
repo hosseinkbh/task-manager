@@ -28,7 +28,7 @@ export class TaskModel {
   @Prop({ type: String, ref: 'UserModel', required: true })
   createdBy!: Types.ObjectId | UserModel;
   @Prop({ type: String, ref: 'UserModel', required: false, default: null })
-  assign?: Types.ObjectId | UserModel | null;
+  assign?: Types.ObjectId | UserModel | undefined;
   @Prop({
     type: String,
     enum: PriorityType,

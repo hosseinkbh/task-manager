@@ -24,14 +24,15 @@ export class User {
   @PrimaryGeneratedColumn('increment')
   @Column({ generated: 'rowid' })
   taskId!: number;
+
   @MinLength(3)
   @MaxLength(500)
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', length: 500 })
   title!: string;
 
   @MinLength(3)
   @MaxLength(5000)
-  @Column({ type: 'number' })
+  @Column({ type: 'varchar', length: 5000 })
   description!: string;
 
   @Column({ type: 'varchar' })
@@ -40,10 +41,12 @@ export class User {
   @Column({ type: 'varchar' })
   assign!: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'enum', enum: PriorityType })
   priority!: string;
-  @Column({ type: 'varchar' })
+
+  @Column({ type: 'enum', enum: TaskStatus })
   status!: string;
+
   @Column({ type: 'varchar' })
   epic!: string;
 }

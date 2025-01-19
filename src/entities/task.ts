@@ -1,5 +1,14 @@
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { MaxLength, MinLength } from 'class-validator';
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { UserEntity } from './user';
+import { EpicEntity } from './epic';
 
 export enum PriorityType {
   HIGH = 'HIGH',
@@ -15,38 +24,38 @@ export enum TaskStatus {
   DELETED = 'DELETED',
 }
 
-@Entity({ name: 'user' })
-@Unique(['id', 'taskId'])
-export class User {
+@Entity({ name: 'tasks' })
+export class TaskEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: number;
+  id!: string;
 
-  @PrimaryGeneratedColumn('increment')
-  @Column({ generated: 'rowid' })
-  taskId!: number;
-
-  @MinLength(3)
   @MaxLength(500)
-  @Column({ type: 'varchar', length: 500 })
+  @MinLength(1)
+  @Column({ type: 'varchar', length: 500, nullable: false })
   title!: string;
 
-  @MinLength(3)
   @MaxLength(5000)
-  @Column({ type: 'varchar', length: 5000 })
-  description!: string;
+  @Column({ type: 'text', length: 5000, nullable: true })
+  description?: string | null;
 
-  @Column({ type: 'varchar' })
-  createdBy!: string;
+  @ManyToOne(() => UserEntity, { nullable: false })
+  createdBy!: UserEntity;
 
-  @Column({ type: 'varchar' })
-  assign!: string;
+  @ManyToOne(() => UserEntity, { nullable: true })
+  assign?: UserEntity | null;
 
-  @Column({ type: 'enum', enum: PriorityType })
-  priority!: string;
+  @ManyToOne(() => EpicEntity, { nullable: true })
+  epic?: EpicEntity | null;
 
-  @Column({ type: 'enum', enum: TaskStatus })
-  status!: string;
+  @Column({ type: 'enum', enum: PriorityType, default: PriorityType.MEDIUM })
+  priority?: PriorityType;
 
-  @Column({ type: 'varchar' })
-  epic!: string;
+  @Column({ type: 'enum', enum: TaskStatus, default: TaskStatus.TODO })
+  status?: TaskStatus;
+
+  @CreateDateColumn()
+  createdAt!: Date;
+
+  @UpdateDateColumn()
+  updatedAt!: Date;
 }

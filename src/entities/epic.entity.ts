@@ -1,19 +1,10 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Entity, Column, ManyToOne } from 'typeorm';
 import { MaxLength, MinLength } from 'class-validator';
-import { UserEntity } from './user';
+import { UserEntity } from './user.entity';
+import { BaseEntity } from './base.entity';
 
 @Entity({ name: 'epics' })
-export class EpicEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id!: string;
-
+export class EpicEntity extends BaseEntity {
   @MaxLength(500)
   @MinLength(1)
   @Column({ type: 'varchar', length: 500, nullable: false })
@@ -25,10 +16,4 @@ export class EpicEntity {
 
   @ManyToOne(() => UserEntity, { nullable: false })
   createdBy!: UserEntity;
-
-  @CreateDateColumn()
-  createdAt!: Date;
-
-  @UpdateDateColumn()
-  updatedAt!: Date;
 }

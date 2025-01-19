@@ -7,8 +7,9 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { MaxLength, MinLength } from 'class-validator';
-import { UserEntity } from './user';
-import { EpicEntity } from './epic';
+import { UserEntity } from './user.entity';
+import { EpicEntity } from './epic.entity';
+import { BaseEntity } from './base.entity';
 
 export enum PriorityType {
   HIGH = 'HIGH',
@@ -25,10 +26,7 @@ export enum TaskStatus {
 }
 
 @Entity({ name: 'tasks' })
-export class TaskEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id!: string;
-
+export class TaskEntity extends BaseEntity {
   @MaxLength(500)
   @MinLength(1)
   @Column({ type: 'varchar', length: 500, nullable: false })
@@ -52,10 +50,4 @@ export class TaskEntity {
 
   @Column({ type: 'enum', enum: TaskStatus, default: TaskStatus.TODO })
   status?: TaskStatus;
-
-  @CreateDateColumn()
-  createdAt!: Date;
-
-  @UpdateDateColumn()
-  updatedAt!: Date;
 }

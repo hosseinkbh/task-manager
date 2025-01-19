@@ -1,17 +1,9 @@
 import { MaxLength, MinLength } from 'class-validator';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Entity, Column } from 'typeorm';
+import { BaseEntity } from './base.entity';
 
 @Entity({ name: 'users' })
-export class UserEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id!: string;
-
+export class UserEntity extends BaseEntity {
   @MinLength(2)
   @MaxLength(20)
   @Column({ type: 'varchar', length: 20, nullable: false })
@@ -36,10 +28,4 @@ export class UserEntity {
   @MaxLength(150)
   @Column({ type: 'varchar', length: 150, nullable: false })
   password!: string;
-
-  @CreateDateColumn()
-  createdAt!: Date;
-
-  @UpdateDateColumn()
-  updatedAt!: Date;
 }

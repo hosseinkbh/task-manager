@@ -1,20 +1,10 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
-  ManyToMany,
-} from 'typeorm';
+import { Entity, Column, ManyToOne, ManyToMany } from 'typeorm';
 import { MaxLength, MinLength } from 'class-validator';
-import { UserEntity } from './user';
+import { UserEntity } from './user.entity';
+import { BaseEntity } from './base.entity';
 
 @Entity({ name: 'workspaces' })
-export class WorkspaceEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id!: string;
-
+export class WorkspaceEntity extends BaseEntity {
   @MaxLength(100)
   @MinLength(1)
   @Column({ type: 'varchar', length: 100, nullable: false })
@@ -25,10 +15,4 @@ export class WorkspaceEntity {
 
   @ManyToMany(() => UserEntity, { nullable: false })
   memebers!: UserEntity[];
-
-  @CreateDateColumn()
-  createdAt!: Date;
-
-  @UpdateDateColumn()
-  updatedAt!: Date;
 }
